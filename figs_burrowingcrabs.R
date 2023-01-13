@@ -112,7 +112,6 @@ figure5 <-
          other_forbs) %>%
   ggplot(aes(x=burrows, y=pccover, color = plant, group = plant)) +
   geom_point(size = 2) +
-    geom_smooth(method="lm", se=FALSE, linetype = "dashed") +
     labs(color = "") + 
     xlab("Average # burrows") +
     ylab("Vegetation % cover") +
@@ -128,8 +127,8 @@ figure5 <-
           panel.background = element_blank(), 
           panel.border = element_blank(),
           text=element_text(family="sans")) +
-    stat_cor(label.x = 18) +
-    stat_regline_equation()
+    stat_poly_line(formula = y~0+x, se=FALSE, linetype = "dashed") +
+    stat_poly_eq(use_label(c("eq", "P")), formula = y~0+x, sep = "  ")
   
 figure5
   
@@ -144,7 +143,6 @@ figure6 <-
          bare) %>%
   ggplot(aes(x=burrows, y=pccover, color = gcov, group = gcov)) +
   geom_point(size = 2) +
-  geom_smooth(method="lm", se=FALSE, linetype = "dashed") +
   labs(color = "") + 
   xlab("Average # burrows") +
   ylab("Cover category %") +
@@ -160,8 +158,10 @@ figure6 <-
         panel.background = element_blank(), 
         panel.border = element_blank(),
         text=element_text(family="sans")) +
-  stat_cor(label.x = 18) +
-  stat_regline_equation()
+#  stat_cor(label.x = 18) +
+#  stat_regline_equation() +
+  stat_poly_line(method = "lm", se=FALSE, linetype = "dashed") +
+  stat_poly_eq(use_label(c("eq", "P")))
 
 figure6
 
