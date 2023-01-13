@@ -165,6 +165,74 @@ figure6 <-
 
 figure6
 
+#Table for salicornia, other forbs (forced through zero), wrack, bare (not forced through zero)
+
+lm_salicornia = lm(
+  salicornia_spp ~ 0+burrows,
+  data = fig5data
+)
+salcoef <-
+  lm_salicornia$coefficients
+saleq <- paste("Y =", paste(round(salcoef[1],2), paste("x")))
+saleq
+
+salr2 <- summary(lm_salicornia)$r.squared
+salp <- summary(lm_salicornia)$coefficients[,4]
+
+
+lm_otherforbs = lm(
+  other_forbs ~ 0+burrows,
+  data = fig5data
+)
+forbcoef <-
+  lm_otherforbs$coefficients
+forbeq <- paste("Y =", paste(round(forbcoef[1],2), paste("x")))
+forbeq
+
+forbr2 <- summary(lm_otherforbs)$r.squared
+forbp <- summary(lm_otherforbs)$coefficients[,4]
+
+
+lm_wrack = lm(
+  wrack ~ burrows,
+  data = fig6data
+)
+wrackcoef <-
+  lm_wrack$coefficients
+wrackeq <- 
+  paste("Y =", paste(round(wrackcoef[1],2), paste(round(wrackcoef[-1],2), "x", sep=" * ", collapse=" + "), sep=" + "))
+wrackeq
+
+wrackr2 <- summary(lm_wrack)$r.squared
+  wrackp <- summary(lm_wrack)$coefficients[,4][2]
+
+
+lm_bare = lm(
+  bare ~ burrows,
+  data = fig6data
+)
+barecoef <-
+  lm_bare$coefficients
+bareeq <- 
+  paste("Y =", paste(round(barecoef[1],2), paste(round(barecoef[-1],2), "x", sep=" * ", collapse=" + "), sep=" + "))
+bareeq
+
+barer2 <- summary(lm_bare)$r.squared
+barep <- summary(lm_bare)$coefficients[,4][2]
+
+cover_category <- c("Salicornia sp.", "Other forbs", "Wrack", "Bare")
+equation <- c(saleq, forbeq, wrackeq, bareeq)
+r2 <- c(salr2, forbr2, wrackr2, barer2)
+p <- c(salp, forbp, wrackp, barep)
+
+equationstable <-
+data.frame(cover_category,
+           equation,
+           r2,
+           p)
+
+grid.table(equationstable)
+
 #Figure 7
 fig7data <- read.csv("fig7data.csv")
 colnames(fig7data)[1] <- "treatment"
