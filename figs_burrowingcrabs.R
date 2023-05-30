@@ -28,7 +28,7 @@ fig2data %>%
         panel.grid.major = element_blank(),
         panel.background = element_blank(), 
         panel.border = element_blank(),
-        text=element_text(family="sans", size = 17))
+        text=element_text(family="sans", size = 30))
 
 figure2
   
@@ -42,7 +42,7 @@ figure3 <-
   ggplot(aes(x = liveveg_percentcover, y= burrowcount_perm2)) +
   geom_point(color = "black", size = 1.5) +
   stat_poly_line(formula = y~x, se=TRUE) +
-  stat_poly_eq(use_label(c("eq", "P")), formula = y~x, size = 5, label.x = 50) +
+  stat_poly_eq(use_label(c("eq", "P")), formula = y~x, size = 10, label.x = 50) +
   xlab("Live vegetation (% cover)") +
   ylab(bquote("Crab burrows per m"^2)) +
   theme_bw() +
@@ -53,7 +53,7 @@ figure3 <-
         panel.grid.major = element_blank(),
         panel.background = element_blank(), 
         panel.border = element_blank(),
-        text=element_text(family="sans", size = 17)) +
+        text=element_text(family="sans", size = 30)) +
   coord_cartesian(ylim= c(12, 300), xlim= c(4.75, 100))
 
 
@@ -61,33 +61,11 @@ figure3 <-
   
   
 #  stat_regline_equation(label.x = 75, label.y = 270, aes(x=liveveg_percentcover, y=yline,
-#                                                         label = after_stat(eq.label))) +
+#                                                         label = afterhttp://127.0.0.1:19487/graphics/543e868d-ede4-42f3-8232-9e8b397cef87.png_stat(eq.label))) +
 #  annotate("text", x=82, y=260, label = lbl1, parse = TRUE)
 #  geom_ribbon(aes(ymin=lowerCI, ymax=upperCI), linetype = 2, alpha=0.2)
 
 figure3
-
-
-###fitting exponential curve
-
-mdl1 <- lm(burrowcount_perm2~liveveg_percentcover, data = fig3data)
-mdl2 <- lm(burrowcount_perm2~liveveg_percentcover + I(liveveg_percentcover^2), data = fig3data)
-mdl3 <- lm(burrowcount_perm2~liveveg_percentcover + I(liveveg_percentcover^2) + I(liveveg_percentcover^3), data = fig3data)
-mdl4 <- lm(burrowcount_perm2~I(liveveg_percentcover^2), data = fig3data)
-
-result <- fig3data
-result$mdl1 <- predict(mdl1, newdata = fig3data)
-result$mdl2 <- predict(mdl2, newdata = fig3data)
-result$mdl3 <- predict(mdl3, newdata = fig3data)
-result$mdl4 <- predict(mdl4, newdata = fig3data)
-
-result <- melt(result, id.vars = "liveveg_percentcover", variable.name = "model",
-               value.name = "fitted")
-
-ggplot(result, aes(x = liveveg_percentcover, y = fitted)) +
-  theme_bw() +
-  geom_point(data = fig3data, aes(x=liveveg_percentcover, y=burrowcount_perm2)) +
-  geom_line(aes(colour = model), size = 1)
 
 
 ###LOG TRANSFORMED
@@ -150,7 +128,8 @@ fig4data %>%
         panel.background = element_blank(), 
         panel.border = element_blank(),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
-        text=element_text(family="sans", size = 17))
+        text=element_text(family="sans", size = 30),
+        plot.margin = margin(10,10,10,10))
 figure4
 
 #Figure 5
@@ -331,7 +310,7 @@ figure7 <-
         panel.grid.major = element_blank(),
         panel.background = element_blank(), 
         panel.border = element_blank(),
-        text=element_text(family="sans", size = 20))
+        text=element_text(family="sans", size = 30))
 
 figure7
 
@@ -387,7 +366,8 @@ figure8 <-
         panel.grid.major = element_blank(),
         panel.border = element_blank(), 
         panel.background = element_blank(),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
-        text=element_text(family="sans", size = 20))
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        text=element_text(family="sans", size = 30),
+        plot.margin = margin(10,10,10,50))
 
 figure8
