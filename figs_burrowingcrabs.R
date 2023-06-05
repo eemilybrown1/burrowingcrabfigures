@@ -6,6 +6,7 @@ library(tidyverse)
 library(ggpubr)
 library(ggpmisc)
 library(gridExtra)
+library(ggpattern)
 
 #Figure 2
 fig2data <- read.csv("fig2data.csv")
@@ -340,7 +341,12 @@ fig8summary <-
 figure8 <-
   fig8summary %>%
   ggplot(aes(x=species, y=mean, fill = treatment)) +
-  geom_bar(stat = "identity", width=.6, position = "dodge") +
+  geom_bar_pattern(stat = "identity", width=.6, position = "dodge",
+                   pattern = c("none", "none", "none", "none", "none", "none", "none", "none", "none", "none",
+                               "stripe", "stripe", "stripe", "stripe", "stripe", "stripe", "stripe", "stripe", "stripe", "stripe"),
+                   pattern_fill = "black",
+                   pattern_density = .05,
+                   pattern_spacing = .02) +
   geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width = 0.2, position = position_dodge(.6)) +
   geom_hline(yintercept = 0) +
   xlab("Species") +
@@ -368,6 +374,9 @@ figure8 <-
         panel.background = element_blank(),
         axis.text.x = element_text(angle = 45, hjust = 1),
         text=element_text(family="sans", size = 30),
-        plot.margin = margin(10,10,10,50))
+        plot.margin = margin(10,10,10,50)) +
+  guides(fill = guide_legend(override.aes = 
+                             list(pattern = c("none", "stripe"),
+                                  pattern_spacing = .02)))
 
 figure8
